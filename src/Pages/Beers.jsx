@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 const Beers = () => {
   const [beers, setBeers] = useState([]);
+  const [searchedString, setSearchedString] = useState("");
 
   useEffect(() => {
     axios.get("https://ih-beers-api2.herokuapp.com/beers").then((response) => {
@@ -12,11 +13,28 @@ const Beers = () => {
     });
   }, []);
 
+  useEffect(() => {
+    axios
+      .get(
+        `https://ih-beers-api2.herokuapp.com/beers/search?q=${searchedString}`
+      )
+      .then((response) => setBeers(response.data))
+      .catch((e) => console.log(e));
+  }, [searchedString]);
+
   return (
     <>
       <NavBar />
       <h2>All Beers</h2>
-
+      <input
+        type="text"
+        name="searchedString"
+        value={searchedString}
+        onChange={(e) => {
+          setSearchedString(e.target.value);
+          console.log(searchedString);
+        }}
+      />
       {beers.map((beer, i) => {
         return (
           <div className="beer-container" key={i}>
