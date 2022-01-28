@@ -28,7 +28,7 @@ const Beers = () => {
       <h2>All Beers</h2>
       <input
         type="text"
-        name="searchedString"
+        placeholder="Search for a beer"
         value={searchedString}
         onChange={(e) => {
           setSearchedString(e.target.value);
